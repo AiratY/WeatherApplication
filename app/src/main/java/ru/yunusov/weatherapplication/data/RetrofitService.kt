@@ -1,0 +1,18 @@
+package ru.yunusov.weatherapplication.data
+
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import ru.yunusov.weatherapplication.WeatherService
+
+object RetrofitService {
+    private const val API_URL = "https://api.openweathermap.org"
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(API_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .build()
+
+    val weatherService: WeatherService = retrofit.create(WeatherService::class.java)
+}

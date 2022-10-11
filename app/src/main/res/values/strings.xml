@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">WeatherApplication</string>
+    <string name="title_city">Введите город</string>
+    <string name="now">Сейчас</string>
+    <string name="title_humidity">Влажность</string>
+    <string name="title_pressure">Давление</string>
+    <string name="title_clouds">Облачность</string>
+    <string name="title_visibility">Видимость</string>
+    <string name="title_pop">Вероятность осадков</string>
+    <string name="temp">%1$d °C</string>
+    <string name="feels_temp">Ощущается как %1$d °C</string>
+    <string name="percent">%1$d %%</string>
+    <string name="pressure">%1$d мбар</string>
+    <string name="km_end">%1$d км</string>
+    <string name="title_wind">Ветер</string>
+    <string name="speed_wind">%1$1.2f м/с</string>
+    <string name="max_and_min_temp">%1$d/%2$d °C</string>
+    <string name="preference_file_key">preference_file_key</string>
+    <string name="main_city">main_city</string>
+    <string name="desc_main_icon">main_icon</string>
+    <string name="list_cities">list_cities</string>
+    <string name="desc_delete_icon">delete</string>
+    <string name="desc_edit_image">edit</string>
+    <string name="desc_icon_forecast">icon_forecast</string>
+</resources>

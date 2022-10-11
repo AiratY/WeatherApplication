@@ -1,20 +1,21 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.selectcity
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.jakewharton.rxbinding.widget.RxTextView
+import ru.yunusov.weatherapplication.R
 import java.io.InputStreamReader
 
 class SelectCityFragment : Fragment(), CityCallback {
@@ -26,7 +27,8 @@ class SelectCityFragment : Fragment(), CityCallback {
     private var listCityFromBundle: ArrayList<String>? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_select_city, container, false)

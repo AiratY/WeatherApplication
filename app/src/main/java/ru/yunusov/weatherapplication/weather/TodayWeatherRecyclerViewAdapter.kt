@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.weather
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ru.yunusov.weatherapplication.data.Forecast
+import ru.yunusov.weatherapplication.*
+import ru.yunusov.weatherapplication.data.model.Forecast
+import ru.yunusov.weatherapplication.other.*
 import java.lang.ref.WeakReference
 
 class TodayWeatherRecyclerViewAdapter(context: Context) :
@@ -19,7 +21,7 @@ class TodayWeatherRecyclerViewAdapter(context: Context) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val timeTextView: TextView = view.findViewById(R.id.timeTextView)
         private val popTextView: TextView = view.findViewById(R.id.popTextView)
-        val iconImageView: ImageView = view.findViewById(R.id.iconTodayImageView)
+        private val iconImageView: ImageView = view.findViewById(R.id.iconTodayImageView)
         private val tempItemTextView: TextView = view.findViewById(R.id.tempItemTextView)
 
         fun bind(forecast: Forecast) {
@@ -33,7 +35,6 @@ class TodayWeatherRecyclerViewAdapter(context: Context) :
                 ?.let { forecast.main.temp.toInt().getWitchDegree(it) }
             PicassoHelper.setIconImageView(forecast.weather[0].icon, iconImageView)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

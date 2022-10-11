@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.weather
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.yunusov.weatherapplication.other.PicassoHelper
+import ru.yunusov.weatherapplication.R
 import ru.yunusov.weatherapplication.data.model.WeatherItemWeek
+import ru.yunusov.weatherapplication.other.getShortDate
 import java.lang.ref.WeakReference
 
 class WeekWeatherRecyclerViewAdapter(context: Context) :
@@ -17,16 +20,19 @@ class WeekWeatherRecyclerViewAdapter(context: Context) :
     private val weakReferenceContext = WeakReference(context)
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val dayTextView: TextView = view.findViewById(R.id.dayOfWeekTextView)
-        val iconDayOfWeek: ImageView = view.findViewById(R.id.iconDayOfWeekImageView)
-        val tempDayOfWeek: TextView = view.findViewById(R.id.tempOfWeekTextView)
+        private val dayTextView: TextView = view.findViewById(R.id.dayOfWeekTextView)
+        private val iconDayOfWeek: ImageView = view.findViewById(R.id.iconDayOfWeekImageView)
+        private val tempDayOfWeek: TextView = view.findViewById(R.id.tempOfWeekTextView)
 
         fun bind(weatherItemWeek: WeatherItemWeek) {
             dayTextView.text = weatherItemWeek.date.getShortDate()
-            tempDayOfWeek.text = weakReferenceContext.get()?.getString(R.string.max_and_min_temp, weatherItemWeek.maxTemp,weatherItemWeek.minTemp)
+            tempDayOfWeek.text = weakReferenceContext.get()?.getString(
+                R.string.max_and_min_temp,
+                weatherItemWeek.maxTemp,
+                weatherItemWeek.minTemp
+            )
             PicassoHelper.setIconImageView(weatherItemWeek.iconId, iconDayOfWeek)
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.selectcity
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.yunusov.weatherapplication.R
 import java.lang.ref.WeakReference
 
 class ResultSearchCityRecyclerViewAdapter(callback: CityCallback) :
@@ -18,7 +19,7 @@ class ResultSearchCityRecyclerViewAdapter(callback: CityCallback) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val cityTextView: TextView = view.findViewById(R.id.cityTextView)
         private val deleteImageView: ImageView = view.findViewById(R.id.deleteImageView)
-        var currentCity: String? = null
+        private var currentCity: String? = null
 
         init {
             view.setOnClickListener {
@@ -38,7 +39,6 @@ class ResultSearchCityRecyclerViewAdapter(callback: CityCallback) :
                 deleteImageView.visibility = View.GONE
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

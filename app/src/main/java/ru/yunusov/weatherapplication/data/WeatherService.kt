@@ -1,9 +1,9 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.data
 
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
-import ru.yunusov.weatherapplication.data.ResultList
+import ru.yunusov.weatherapplication.data.model.ResultList
 
 private const val API_KEY = "00c2f128f0403212d87221590ffa985e"
 private const val DEFAULT_LANG = "RU"

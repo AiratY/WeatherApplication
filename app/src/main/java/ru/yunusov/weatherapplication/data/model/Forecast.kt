@@ -1,11 +1,6 @@
-package ru.yunusov.weatherapplication.data
+package ru.yunusov.weatherapplication.data.model
 
 import com.google.gson.annotations.SerializedName
-
-data class ResultList(
-    val cod: Long,
-    val list: List<Forecast>
-)
 
 data class Forecast(
     var dt: Long,
@@ -28,6 +23,7 @@ data class Forecast(
         val pressure: Int,
         val humidity: Int,
     )
+
     data class Weather(
         val id: Int,
         val main: String,

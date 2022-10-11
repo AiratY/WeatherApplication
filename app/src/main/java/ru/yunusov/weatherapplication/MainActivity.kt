@@ -1,10 +1,12 @@
 package ru.yunusov.weatherapplication
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import ru.yunusov.weatherapplication.selectcity.SelectCityFragment
+import ru.yunusov.weatherapplication.weather.WeatherFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,13 +17,17 @@ class MainActivity : AppCompatActivity() {
             getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val cityName = shared.getString(getString(R.string.main_city), null)
 
-        if (savedInstanceState == null || !savedInstanceState.getBoolean(IS_FRAGMENT_CRATED,false)) {
+        if (savedInstanceState == null || !savedInstanceState.getBoolean(
+                IS_FRAGMENT_CRATED,
+                false
+            )
+        ) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
                 val fragment = if (cityName == null) {
                     SelectCityFragment.newInstance(true)
                 } else {
-                    TodayWeatherFragment.newInstance(cityName)
+                    WeatherFragment.newInstance(cityName)
                 }
                 add(R.id.fragment_container_view, fragment)
             }
@@ -32,11 +38,11 @@ class MainActivity : AppCompatActivity() {
             this
         ) { _, bundle ->
             val city = bundle.getString(SelectCityFragment.BUNDLE_CITY_NAME)
-            city?.let { replaceFragment(TodayWeatherFragment.newInstance(it)) }
+            city?.let { replaceFragment(WeatherFragment.newInstance(it)) }
         }
 
         supportFragmentManager.setFragmentResultListener(
-            TodayWeatherFragment.REQUEST_SHOW_SELECT_CITY,
+            WeatherFragment.REQUEST_SHOW_SELECT_CITY,
             this
         ) { _, _ ->
             replaceFragment(SelectCityFragment.newInstance(false))
@@ -47,7 +53,6 @@ class MainActivity : AppCompatActivity() {
      * Меняет фрагмент
      * @param fragment - новый фрагмент
      * */
-
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             setReorderingAllowed(true)

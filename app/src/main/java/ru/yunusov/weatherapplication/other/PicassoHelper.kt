@@ -1,7 +1,8 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.other
 
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
+import ru.yunusov.weatherapplication.R
 
 class PicassoHelper {
 
@@ -12,7 +13,6 @@ class PicassoHelper {
         /**
          * Загружает изображение и устанавливает в ImageView
          * */
-
         fun setIconImageView(idIcon: String, imageView: ImageView) {
             Picasso.get()
                 .load(BASE_URL + idIcon + END)
@@ -20,7 +20,6 @@ class PicassoHelper {
                 .error(R.mipmap.ic_sunny)
                 .fit()
                 .into(imageView)
-
         }
     }
 }

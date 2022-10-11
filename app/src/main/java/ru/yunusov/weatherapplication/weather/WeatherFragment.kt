@@ -1,7 +1,6 @@
-package ru.yunusov.weatherapplication
+package ru.yunusov.weatherapplication.weather
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +12,23 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.HttpException
-import ru.yunusov.weatherapplication.data.Forecast
-import ru.yunusov.weatherapplication.data.ResultList
+import ru.yunusov.weatherapplication.*
+import ru.yunusov.weatherapplication.data.model.Forecast
 import ru.yunusov.weatherapplication.data.RetrofitService
+import ru.yunusov.weatherapplication.data.model.ResultList
 import ru.yunusov.weatherapplication.data.model.WeatherItemWeek
+import ru.yunusov.weatherapplication.other.*
 import java.net.UnknownHostException
 import java.time.LocalDate
 
-class TodayWeatherFragment : Fragment() {
+class WeatherFragment : Fragment() {
 
     private var tempTextView: TextView? = null
     private var feelsLikeTextView: TextView? = null
@@ -47,12 +49,12 @@ class TodayWeatherFragment : Fragment() {
 
     private var cityName: String? = null
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_today_wheather, container, false)
+        return inflater.inflate(R.layout.fragment_weather, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,7 +100,7 @@ class TodayWeatherFragment : Fragment() {
             showScreenSelectCity()
         }
         solveErrorBtn?.setOnClickListener {
-            when((it as Button).text) {
+            when ((it as Button).text) {
                 CHANGE_CITY -> showScreenSelectCity()
                 UPDATE -> cityName?.let { city -> getDataFromAPI(city) }
             }
@@ -167,7 +169,7 @@ class TodayWeatherFragment : Fragment() {
      * */
     private fun onGetWeatherFail(throwable: Throwable) {
         goneProgressbar()
-        when(throwable) {
+        when (throwable) {
             is HttpException -> {
                 showMessage(NOT_FOUND)
                 showSolveErrorBtn(CHANGE_CITY)
@@ -266,7 +268,8 @@ class TodayWeatherFragment : Fragment() {
     }
 
     companion object {
-        private const val NO_CONNECTION = "Сеть недоступна. Проверьте подключение и повторите попытку"
+        private const val NO_CONNECTION =
+            "Сеть недоступна. Проверьте подключение и повторите попытку"
         private const val NOT_FOUND = "Прогноз погоды в этом городе не найден"
         private const val CHANGE_CITY = "Выбрать другой город"
         private const val UPDATE = "Обновить"
@@ -274,8 +277,8 @@ class TodayWeatherFragment : Fragment() {
         private const val CITY_NAME = "city_name"
         const val REQUEST_SHOW_SELECT_CITY = "show_select_city"
 
-        fun newInstance(city: String): TodayWeatherFragment {
-            return TodayWeatherFragment().apply {
+        fun newInstance(city: String): WeatherFragment {
+            return WeatherFragment().apply {
                 arguments = bundleOf(
                     CITY_NAME to city
                 )

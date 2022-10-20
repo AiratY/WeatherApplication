@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication.selectcity
+package ru.yunusov.weatherapplication.presentation.selectcity
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

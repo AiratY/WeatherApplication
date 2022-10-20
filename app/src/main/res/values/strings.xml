@@ -16,7 +16,6 @@
     <string name="speed_wind">%1$1.2f м/с</string>
     <string name="max_and_min_temp">%1$d/%2$d °C</string>
     <string name="preference_file_key">preference_file_key</string>
-    <string name="main_city">main_city</string>
     <string name="desc_main_icon">main_icon</string>
     <string name="list_cities">list_cities</string>
     <string name="desc_delete_icon">delete</string>

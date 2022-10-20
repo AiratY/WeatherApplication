@@ -1,21 +1,21 @@
-package ru.yunusov.weatherapplication.weather
+package ru.yunusov.weatherapplication.presentation.weather
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ru.yunusov.weatherapplication.*
+import ru.yunusov.weatherapplication.R
 import ru.yunusov.weatherapplication.data.model.Forecast
-import ru.yunusov.weatherapplication.other.*
-import java.lang.ref.WeakReference
+import ru.yunusov.weatherapplication.other.PicassoHelper
+import ru.yunusov.weatherapplication.other.convertToPercent
+import ru.yunusov.weatherapplication.other.getDataFromUnix
+import ru.yunusov.weatherapplication.other.getTime
 
-class TodayWeatherRecyclerViewAdapter(context: Context) :
+class TodayWeatherRecyclerViewAdapter :
     RecyclerView.Adapter<TodayWeatherRecyclerViewAdapter.ViewHolder>() {
-    private val wrContext = WeakReference(context)
     private var dataSet: List<Forecast> = emptyList()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -29,10 +29,9 @@ class TodayWeatherRecyclerViewAdapter(context: Context) :
             timeTextView.text = date.getTime()
             val pop = forecast.pop.convertToPercent()
             if (pop > 50) {
-                popTextView.text = wrContext.get()?.let { pop.getWithPercent(it) }
+                popTextView.text = forecast.getPopString()
             }
-            tempItemTextView.text = wrContext.get()
-                ?.let { forecast.main.temp.toInt().getWitchDegree(it) }
+            tempItemTextView.text = forecast.main.getTempWithDegree()
             PicassoHelper.setIconImageView(forecast.weather[0].icon, iconImageView)
         }
     }

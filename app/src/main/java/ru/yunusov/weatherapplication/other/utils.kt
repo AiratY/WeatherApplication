@@ -1,6 +1,6 @@
 package ru.yunusov.weatherapplication.other
 
-import android.content.Context
+import ru.yunusov.weatherapplication.App
 import ru.yunusov.weatherapplication.R
 import java.lang.ref.WeakReference
 import java.time.LocalDate
@@ -50,18 +50,15 @@ fun Int.convertToKM(): Int {
 
 /**
  * Возращает строку с числом и процентами
- * @param context - для доступа к ресурсам
  * */
-fun Int.getWithPercent(context: Context): String {
-    val weakReferenceContext = WeakReference(context)
-    return weakReferenceContext.get()?.getString(R.string.percent, this) ?: ""
+fun Int.getWithPercent(): String {
+    return App.getAppContext()?.getString(R.string.percent, this) ?: ""
 }
 
 /**
  * Возвращает строку с числом и градусами цельсия
- * @param context - для доступа к ресурсам
  * */
-fun Int.getWitchDegree(context: Context): String {
-    val weakReferenceContext = WeakReference(context)
+fun Int.getWitchDegree(): String {
+    val weakReferenceContext = WeakReference(App.getAppContext())
     return weakReferenceContext.get()?.getString(R.string.temp, this) ?: ""
 }

@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication.selectcity
+package ru.yunusov.weatherapplication.presentation.selectcity
 
 interface CityCallback {
     /**

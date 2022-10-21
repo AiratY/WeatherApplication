@@ -2,6 +2,7 @@ package ru.yunusov.weatherapplication.data.repository.gson
 
 import com.google.gson.Gson
 import ru.yunusov.weatherapplication.App
+import ru.yunusov.weatherapplication.domain.ListAllCity
 import java.io.InputStreamReader
 
 class GsonService : ListAllCity {

@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication.data.repository.shared
+package ru.yunusov.weatherapplication.domain
 
 interface SavedMainCity {
     /**

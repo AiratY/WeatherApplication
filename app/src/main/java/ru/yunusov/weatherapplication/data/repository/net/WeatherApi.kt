@@ -9,7 +9,7 @@ private const val API_KEY = "00c2f128f0403212d87221590ffa985e"
 private const val DEFAULT_LANG = "RU"
 private const val UNITS_OF_MEASUREMENT = "metric"
 
-interface WeatherService {
+interface WeatherApi {
     @GET("/data/2.5/forecast?appid=$API_KEY&lang=$DEFAULT_LANG&units=$UNITS_OF_MEASUREMENT")
     fun getWeather(@Query("q") cityName: String): Observable<ForecastList>
 }

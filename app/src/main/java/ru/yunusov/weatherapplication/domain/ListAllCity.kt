@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication.data.repository.gson
+package ru.yunusov.weatherapplication.domain
 
 interface ListAllCity {
     /**

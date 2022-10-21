@@ -1,4 +1,4 @@
-package ru.yunusov.weatherapplication.presentation.weather
+package ru.yunusov.weatherapplication.domain
 
 import ru.yunusov.weatherapplication.data.model.ForecastList
 

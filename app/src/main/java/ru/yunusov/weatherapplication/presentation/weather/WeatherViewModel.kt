@@ -10,6 +10,7 @@ import ru.yunusov.weatherapplication.data.model.ForecastList
 import ru.yunusov.weatherapplication.data.model.WeatherItemWeek
 import ru.yunusov.weatherapplication.domain.ForecastApi
 import ru.yunusov.weatherapplication.domain.ForecastInteractor
+import ru.yunusov.weatherapplication.domain.ForecastOutput
 import ru.yunusov.weatherapplication.other.getDataFromUnix
 import java.lang.ref.WeakReference
 import java.net.UnknownHostException

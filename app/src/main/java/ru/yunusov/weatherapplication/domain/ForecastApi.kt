@@ -1,7 +1,5 @@
 package ru.yunusov.weatherapplication.domain
 
-import ru.yunusov.weatherapplication.presentation.weather.ForecastOutput
-
 interface ForecastApi {
     /**
      * Загружает прогноз погоды

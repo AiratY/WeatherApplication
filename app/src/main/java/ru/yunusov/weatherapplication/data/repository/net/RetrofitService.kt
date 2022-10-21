@@ -13,5 +13,5 @@ object RetrofitService {
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .build()
 
-    val weatherService: WeatherService = retrofit.create(WeatherService::class.java)
+    val weatherApi: WeatherApi = retrofit.create(WeatherApi::class.java)
 }

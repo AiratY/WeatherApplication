@@ -22,14 +22,14 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
+                android:id="@+id/startIndentGuideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="@dimen/small_margin" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
+                android:id="@+id/endIndentGuideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -44,7 +44,7 @@
                 android:layout_marginEnd="@dimen/small_margin"
                 android:text="@{viewModel.cityName}"
                 app:layout_constraintEnd_toStartOf="@+id/editImageView"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Ульяновск" />
 
@@ -56,7 +56,7 @@
                 android:onClick="@{() -> viewModel.editCityName()}"
                 android:src="@drawable/ic_baseline_edit_24"
                 app:layout_constraintBottom_toBottomOf="@+id/nameCityTextView"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/endIndentGuideline"
                 app:layout_constraintTop_toTopOf="@+id/nameCityTextView" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@{viewModel.currentForecast.main.tempWithDegree}"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/nameCityTextView"
                 tools:text="14 °C" />
 
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@{viewModel.currentForecast.main.feelsLikeWithDegree}"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/tempTextView"
                 tools:text="Ощущается как 7°C" />
 
@@ -90,7 +90,7 @@
                 android:layout_marginTop="@dimen/small_margin"
                 android:gravity="center"
                 android:text="@{viewModel.currentForecast.description}"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/endIndentGuideline"
                 app:layout_constraintStart_toEndOf="@+id/feelsLikeTextView"
                 app:layout_constraintTop_toBottomOf="@+id/iconImageView"
                 tools:text="Не большой Дождь" />
@@ -108,8 +108,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
-                android:orientation="horizontal"
                 android:adapter="@{viewModel.todayWeatherRecyclerViewAdapter}"
+                android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@+id/section1" />
 
@@ -125,11 +125,11 @@
                 android:id="@+id/weekWeatherRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:adapter="@{viewModel.weekWeatherRecyclerViewAdapter}"
+                android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toStartOf="@+id/endIndentGuideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/section2" />
 
             <View
@@ -147,7 +147,7 @@
                 android:layout_marginTop="@dimen/small_margin"
                 android:contentDescription="@string/desc_main_icon"
                 android:src="@{viewModel.mainIcon}"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/endIndentGuideline"
                 app:layout_constraintStart_toEndOf="@+id/feelsLikeTextView"
                 app:layout_constraintTop_toBottomOf="@+id/nameCityTextView" />
 
@@ -158,7 +158,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@string/now"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/weekWeatherRecyclerView" />
 
             <TextView
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@string/title_humidity"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/titleNowTextView" />
 
             <TextView
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@string/title_pressure"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/titleHumidityTextView" />
 
             <TextView
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@string/title_clouds"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/titlePressureTextView" />
 
             <TextView
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
                 android:text="@string/title_visibility"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/cloudsTitleTextView" />
 
             <TextView
@@ -209,7 +209,7 @@
                 android:layout_marginTop="@dimen/small_margin"
                 android:layout_marginBottom="@dimen/small_margin"
                 android:text="@string/title_pop"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@id/titleVisibilityTextView" />
 
             <TextView
@@ -218,9 +218,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/middle_margin"
+                android:text="@{viewModel.currentForecast.main.humidityWithPercent}"
                 app:layout_constraintBaseline_toBaselineOf="@id/titleHumidityTextView"
                 app:layout_constraintStart_toEndOf="@+id/tittlePopTextView"
-                android:text="@{viewModel.currentForecast.main.humidityWithPercent}"
                 tools:text="75%" />
 
             <TextView
@@ -229,9 +229,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/middle_margin"
+                android:text="@{viewModel.currentForecast.main.pressureString}"
                 app:layout_constraintBaseline_toBaselineOf="@id/titlePressureTextView"
                 app:layout_constraintStart_toEndOf="@+id/tittlePopTextView"
-                android:text="@{viewModel.currentForecast.main.pressureString}"
                 tools:text="1000 мбар" />
 
             <TextView
@@ -240,9 +240,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/middle_margin"
+                android:text="@{viewModel.currentForecast.cloudsString}"
                 app:layout_constraintBaseline_toBaselineOf="@id/cloudsTitleTextView"
                 app:layout_constraintStart_toEndOf="@+id/tittlePopTextView"
-                android:text="@{viewModel.currentForecast.cloudsString}"
                 tools:text="100%" />
 
             <TextView
@@ -251,9 +251,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/middle_margin"
+                android:text="@{viewModel.currentForecast.visibilityString}"
                 app:layout_constraintBaseline_toBaselineOf="@id/titleVisibilityTextView"
                 app:layout_constraintStart_toEndOf="@+id/tittlePopTextView"
-                android:text="@{viewModel.currentForecast.visibilityString}"
                 tools:text="10 км" />
 
             <TextView
@@ -262,9 +262,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/middle_margin"
+                android:text="@{viewModel.currentForecast.popString}"
                 app:layout_constraintBaseline_toBaselineOf="@id/tittlePopTextView"
                 app:layout_constraintStart_toEndOf="@+id/tittlePopTextView"
-                android:text="@{viewModel.currentForecast.popString}"
                 tools:text="40 %" />
 
             <TextView
@@ -276,7 +276,7 @@
                 android:layout_marginBottom="@dimen/middle_margin"
                 android:text="@string/title_wind"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/startIndentGuideline"
                 app:layout_constraintTop_toBottomOf="@+id/tittlePopTextView" />
 
             <TextView
@@ -285,9 +285,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/middle_margin"
+                android:text="@{viewModel.currentForecast.windString}"
                 app:layout_constraintBaseline_toBaselineOf="@+id/titleWindTextView"
                 app:layout_constraintStart_toEndOf="@+id/tittlePopTextView"
-                android:text="@{viewModel.currentForecast.windString}"
                 tools:text="6.79 м/с" />
 
             <ProgressBar
@@ -320,9 +320,9 @@
                 style="@style/usualButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.stateSolveErrorBtn}"
-                android:text="@{viewModel.textSolveBtn}"
                 android:onClick="@{() -> viewModel.enterSolveErrorBtn()}"
+                android:text="@{viewModel.textSolveBtn}"
+                android:visibility="@{viewModel.stateSolveErrorBtn}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

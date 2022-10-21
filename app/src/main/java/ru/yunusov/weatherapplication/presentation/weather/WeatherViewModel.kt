@@ -22,7 +22,7 @@ class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutp
     private val _mainIcon = MutableLiveData("")
     val mainIcon: LiveData<String> get() = _mainIcon
 
-    private val mutableThrowableMessage = MutableLiveData<String>()
+    private var mutableThrowableMessage = MutableLiveData<String>()
     val throwableMessage: LiveData<String> get() = mutableThrowableMessage
 
     private val _stateProgressBar = MutableLiveData<Int>()
@@ -66,6 +66,7 @@ class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutp
             CHANGE_CITY -> editCityName()
             UPDATE -> forecastApi.loadForecast(cityName, this)
         }
+        mutableThrowableMessage = MutableLiveData<String>()
         goneSolveErrorBtn()
         showProgressBar()
     }

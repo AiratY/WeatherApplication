@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="ru.yunusov.weatherapplication.presentation.selectcity.SelectCityViewModel" />
@@ -35,9 +36,9 @@
             android:layout_marginEnd="@dimen/small_margin"
             android:autofillHints="city"
             android:ems="10"
-            android:onTextChanged="@{viewmodel::cityChange}"
             android:inputType="text"
             android:labelFor="@id/cityEditText"
+            android:onTextChanged="@{viewmodel::cityChange}"
             app:layout_constraintTop_toBottomOf="@id/titleCityTextView"
             tools:text="Ульяновск" />
 
@@ -49,8 +50,8 @@
             android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/small_margin"
             android:layout_marginBottom="@dimen/small_margin"
-            android:orientation="vertical"
             android:adapter="@{viewmodel.adapter}"
+            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cityEditText" />

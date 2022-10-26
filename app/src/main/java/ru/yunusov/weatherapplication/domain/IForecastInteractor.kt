@@ -1,6 +1,6 @@
 package ru.yunusov.weatherapplication.domain
 
-interface ForecastApi {
+interface IForecastInteractor {
     /**
      * Загружает прогноз погоды
      * @param cityName - город для которого прогноз загружаеться

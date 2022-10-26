@@ -8,7 +8,7 @@ import retrofit2.HttpException
 import ru.yunusov.weatherapplication.data.model.Forecast
 import ru.yunusov.weatherapplication.data.model.ForecastList
 import ru.yunusov.weatherapplication.data.model.WeatherItemWeek
-import ru.yunusov.weatherapplication.domain.ForecastApi
+import ru.yunusov.weatherapplication.domain.IForecastInteractor
 import ru.yunusov.weatherapplication.domain.ForecastInteractor
 import ru.yunusov.weatherapplication.domain.ForecastOutput
 import ru.yunusov.weatherapplication.other.getDataFromUnix
@@ -46,10 +46,10 @@ class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutp
 
     val cityName = callbackWR.get()?.getCityName() ?: ""
 
-    private val forecastApi: ForecastApi = ForecastInteractor()
+    private val iForecastInteractor: IForecastInteractor = ForecastInteractor()
 
     init {
-        forecastApi.loadForecast(cityName, this)
+        iForecastInteractor.loadForecast(cityName, this)
     }
 
     /**
@@ -65,7 +65,7 @@ class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutp
     fun enterSolveErrorBtn() {
         when (textSolveBtn.value) {
             CHANGE_CITY -> editCityName()
-            UPDATE -> forecastApi.loadForecast(cityName, this)
+            UPDATE -> iForecastInteractor.loadForecast(cityName, this)
         }
         mutableThrowableMessage = MutableLiveData<String>()
         goneSolveErrorBtn()

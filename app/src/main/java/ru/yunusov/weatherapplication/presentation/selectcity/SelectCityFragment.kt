@@ -14,10 +14,10 @@ import ru.yunusov.weatherapplication.databinding.FragmentSelectCityBinding
 import ru.yunusov.weatherapplication.other.creatorViewModel
 import ru.yunusov.weatherapplication.presentation.main.MainViewModel
 
-class SelectCityFragment : Fragment(), ViewForecast {
+class SelectCityFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val viewModel: SelectCityViewModel by creatorViewModel { SelectCityViewModel(this) }
+    private val viewModel: SelectCityViewModel by creatorViewModel { SelectCityViewModel() }
     private var _binding: FragmentSelectCityBinding? = null
     private val binding get() = _binding
 
@@ -41,15 +41,15 @@ class SelectCityFragment : Fragment(), ViewForecast {
             ResourcesCompat.getDrawable(resources, R.drawable.divider_drawable, null)
         drawableDivider?.let { dividerItemDecoration.setDrawable(it) }
         recyclerView?.addItemDecoration(dividerItemDecoration)
+
+        viewModel.showForecastForCity.observe(viewLifecycleOwner) { city ->
+            mainViewModel.showWeather(city)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun showForecast(city: String) {
-        mainViewModel.showWeather(city)
     }
 
     companion object {

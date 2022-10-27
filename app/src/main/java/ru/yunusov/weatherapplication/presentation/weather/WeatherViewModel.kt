@@ -8,9 +8,9 @@ import retrofit2.HttpException
 import ru.yunusov.weatherapplication.data.model.Forecast
 import ru.yunusov.weatherapplication.data.model.ForecastList
 import ru.yunusov.weatherapplication.data.model.WeatherItemWeek
-import ru.yunusov.weatherapplication.domain.IForecastInteractor
 import ru.yunusov.weatherapplication.domain.ForecastInteractor
 import ru.yunusov.weatherapplication.domain.ForecastOutput
+import ru.yunusov.weatherapplication.domain.IForecastInteractor
 import ru.yunusov.weatherapplication.other.getDataFromUnix
 import java.lang.ref.WeakReference
 import java.net.UnknownHostException

@@ -15,7 +15,7 @@ data class Forecast(
     val visibility: Int,
     val pop: Double,
 
-    ) {
+) {
     /**
      * Возвращает описание прогноза погоды
      * */

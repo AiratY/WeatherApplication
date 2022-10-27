@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.yunusov.weatherapplication.domain.SavedMainCity
 import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
+import ru.yunusov.weatherapplication.domain.SavedMainCity
 import ru.yunusov.weatherapplication.presentation.selectcity.SelectCityFragment
 import ru.yunusov.weatherapplication.presentation.weather.WeatherFragment
 

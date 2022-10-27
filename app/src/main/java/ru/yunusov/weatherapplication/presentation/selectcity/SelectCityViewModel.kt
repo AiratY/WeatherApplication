@@ -1,15 +1,15 @@
 package ru.yunusov.weatherapplication.presentation.selectcity
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.yunusov.weatherapplication.data.repository.gson.GsonService
+import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
 import ru.yunusov.weatherapplication.domain.ListAllCity
 import ru.yunusov.weatherapplication.domain.SavedCities
-import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
-import java.lang.ref.WeakReference
 
-class SelectCityViewModel(viewForecast: ViewForecast) : ViewModel(), CityCallback {
+class SelectCityViewModel : ViewModel(), CityCallback {
 
-    private val callback = WeakReference(viewForecast)
     private var isMainCity = true
 
     var adapter = ResultSearchCityRecyclerViewAdapter(this)
@@ -19,6 +19,9 @@ class SelectCityViewModel(viewForecast: ViewForecast) : ViewModel(), CityCallbac
 
     private val savedCities: SavedCities = SharedServices()
     private val listSavedCities = savedCities.loadList()
+
+    private val _showForecastForCity: MutableLiveData<String> = MutableLiveData()
+    val showForecastForCity: LiveData<String> get() = _showForecastForCity
 
     init {
         setSaveList()
@@ -43,7 +46,7 @@ class SelectCityViewModel(viewForecast: ViewForecast) : ViewModel(), CityCallbac
 
     override fun setCity(city: String) {
         savedCities.saveNew(city)
-        callback.get()?.showForecast(city)
+        _showForecastForCity.value = city
     }
 
     override fun deleteCity(city: String) {

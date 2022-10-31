@@ -3,8 +3,7 @@ package ru.yunusov.weatherapplication.presentation.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.navigation.fragment.NavHostFragment
 import ru.yunusov.weatherapplication.R
 
 class MainActivity : AppCompatActivity() {
@@ -13,20 +12,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val viewModel: MainViewModel by viewModels()
+        val args = viewModel.getBundleArgument()
 
-        viewModel.fragment.observe(this) { fragment ->
-            replaceFragment(fragment)
-        }
-    }
+        val navHostFragment: NavHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment?
+                ?: return
+        val navController = navHostFragment.navController
 
-    /**
-     * Меняет фрагмент
-     * @param fragment - новый фрагмент
-     * */
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(R.id.fragment_container_view, fragment)
-        }
+        navController.setGraph(R.navigation.nav_graph, args)
     }
 }

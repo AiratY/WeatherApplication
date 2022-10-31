@@ -1,5 +1,7 @@
 package ru.yunusov.weatherapplication.presentation.selectcity
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +9,7 @@ import ru.yunusov.weatherapplication.data.repository.gson.GsonService
 import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
 import ru.yunusov.weatherapplication.domain.ListAllCity
 import ru.yunusov.weatherapplication.domain.SavedCities
+import ru.yunusov.weatherapplication.other.CITY_NAME
 
 class SelectCityViewModel : ViewModel(), CityCallback {
 
@@ -20,12 +23,23 @@ class SelectCityViewModel : ViewModel(), CityCallback {
     private val savedCities: SavedCities = SharedServices()
     private val listSavedCities = savedCities.loadList()
 
-    private val _showForecastForCity: MutableLiveData<String> = MutableLiveData()
-    val showForecastForCity: LiveData<String> get() = _showForecastForCity
+    private val _showForecastForCity: MutableLiveData<Bundle> = MutableLiveData()
+    val showForecastForCity: LiveData<Bundle> get() = _showForecastForCity
 
     init {
         setSaveList()
         isMainCity = listSavedCities.isEmpty()
+    }
+
+    override fun setCity(city: String) {
+        savedCities.saveNew(city)
+        val bundleCity = bundleOf(CITY_NAME to city)
+        _showForecastForCity.value = bundleCity
+    }
+
+    override fun deleteCity(city: String) {
+        savedCities.removeCity(city)
+        setSaveList()
     }
 
     /**
@@ -42,16 +56,6 @@ class SelectCityViewModel : ViewModel(), CityCallback {
                 setSaveList()
             }
         }
-    }
-
-    override fun setCity(city: String) {
-        savedCities.saveNew(city)
-        _showForecastForCity.value = city
-    }
-
-    override fun deleteCity(city: String) {
-        savedCities.removeCity(city)
-        setSaveList()
     }
 
     /**

@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import ru.yunusov.weatherapplication.R
 import ru.yunusov.weatherapplication.databinding.FragmentSelectCityBinding
 import ru.yunusov.weatherapplication.other.creatorViewModel
-import ru.yunusov.weatherapplication.presentation.main.MainViewModel
 
 class SelectCityFragment : Fragment() {
 
-    private val mainViewModel: MainViewModel by activityViewModels()
     private val viewModel: SelectCityViewModel by creatorViewModel { SelectCityViewModel() }
     private var _binding: FragmentSelectCityBinding? = null
     private val binding get() = _binding
@@ -42,20 +40,13 @@ class SelectCityFragment : Fragment() {
         drawableDivider?.let { dividerItemDecoration.setDrawable(it) }
         recyclerView?.addItemDecoration(dividerItemDecoration)
 
-        viewModel.showForecastForCity.observe(viewLifecycleOwner) { city ->
-            mainViewModel.showWeather(city)
+        viewModel.showForecastForCity.observe(viewLifecycleOwner) { args ->
+            findNavController().navigate(R.id.action_selectCityFragment_to_weatherFragment, args)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        /**
-         * Возвращает экземпляр SelectCityFragment
-         * */
-        fun newInstance() = SelectCityFragment()
     }
 }

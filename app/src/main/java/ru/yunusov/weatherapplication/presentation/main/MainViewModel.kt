@@ -1,42 +1,22 @@
 package ru.yunusov.weatherapplication.presentation.main
 
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
 import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
 import ru.yunusov.weatherapplication.domain.SavedMainCity
-import ru.yunusov.weatherapplication.presentation.selectcity.SelectCityFragment
-import ru.yunusov.weatherapplication.presentation.weather.WeatherFragment
+import ru.yunusov.weatherapplication.other.CITY_NAME
 
 class MainViewModel : ViewModel() {
 
-    private val mutableFragment = MutableLiveData<Fragment>()
-    val fragment: LiveData<Fragment> get() = mutableFragment
-
     private val savedMainCity: SavedMainCity = SharedServices()
-
-    init {
-        val cityName = savedMainCity.loadMainCity()
-        if (cityName == null) {
-            showSelectCity()
-        } else {
-            showWeather(cityName)
-        }
-    }
+    private val cityName: String? = savedMainCity.loadMainCity()
 
     /**
-     * Показывает WeatherFragment
-     * @param city - название города которое выбрал пользователь
+     * Возвращает объкт Bundle с аргументом cityName
+     * @return Bundle
      * */
-    fun showWeather(city: String) {
-        mutableFragment.value = WeatherFragment.newInstance(city)
-    }
-
-    /**
-     * Показывает фрагмент для выбора города
-     * */
-    fun showSelectCity() {
-        mutableFragment.value = SelectCityFragment.newInstance()
+    fun getBundleArgument(): Bundle {
+        return bundleOf(CITY_NAME to cityName)
     }
 }

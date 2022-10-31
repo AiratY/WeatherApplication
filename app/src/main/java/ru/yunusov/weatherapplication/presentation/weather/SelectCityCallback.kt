@@ -9,5 +9,5 @@ interface SelectCityCallback {
     /**
      * Возвращает название Города
      * */
-    fun getCityName(): String
+    fun getCityName(): String?
 }

@@ -16,9 +16,9 @@ import java.lang.ref.WeakReference
 import java.net.UnknownHostException
 import java.time.LocalDate
 
-class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutput {
+class WeatherViewModel : ViewModel(), ForecastOutput {
 
-    private val callbackWR = WeakReference(callback)
+    private var callbackWR: WeakReference<SelectCityCallback>? = null
 
     private val _mainIcon = MutableLiveData("")
     val mainIcon: LiveData<String> get() = _mainIcon
@@ -44,57 +44,9 @@ class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutp
     val todayWeatherRecyclerViewAdapter = TodayWeatherRecyclerViewAdapter()
     val weekWeatherRecyclerViewAdapter = WeekWeatherRecyclerViewAdapter()
 
-    val cityName = callbackWR.get()?.getCityName() ?: ""
+    var cityName = ""
 
     private val iForecastInteractor: IForecastInteractor = ForecastInteractor()
-
-    init {
-        iForecastInteractor.loadForecast(cityName, this)
-    }
-
-    /**
-     * Поменять город для прогноза
-     * */
-    fun editCityName() {
-        callbackWR.get()?.selectNewCity()
-    }
-
-    /**
-     * SolveErrorBtn была нажата
-     * */
-    fun enterSolveErrorBtn() {
-        when (textSolveBtn.value) {
-            CHANGE_CITY -> editCityName()
-            UPDATE -> iForecastInteractor.loadForecast(cityName, this)
-        }
-        mutableThrowableMessage = MutableLiveData<String>()
-        goneSolveErrorBtn()
-        showProgressBar()
-    }
-
-    /**
-     * Устанавливает новое собщение ошибки
-     * @param message - сообщение
-     * */
-    private fun setMessageThrowable(message: String) {
-        mutableThrowableMessage.value = message
-    }
-
-    /**
-     * Изменяет состояние progressbar на Скрытый
-     * */
-    private fun goneProgressbar() {
-        _stateProgressBar.value = View.GONE
-    }
-
-    /**
-     * Показывает кнопку для решения проблемы и указывает текст
-     * @param text - текст, кот. устанавливаеться кнопки
-     * */
-    private fun showSolveErrorBtn(text: String) {
-        _stateSolveErrorBtn.value = View.VISIBLE
-        _textSolveBtn.value = text
-    }
 
     /**
      * Отображает данные полученные от запроса к API
@@ -127,6 +79,73 @@ class WeatherViewModel(callback: SelectCityCallback) : ViewModel(), ForecastOutp
                 showSolveErrorBtn(UPDATE)
             }
         }
+    }
+
+    /**
+     * Поменять город для прогноза
+     * */
+    fun editCityName() {
+        callbackWR?.get()?.selectNewCity()
+    }
+
+    /**
+     * SolveErrorBtn была нажата
+     * */
+    fun enterSolveErrorBtn() {
+        when (textSolveBtn.value) {
+            CHANGE_CITY -> editCityName()
+            UPDATE -> iForecastInteractor.loadForecast(cityName, this)
+        }
+        mutableThrowableMessage = MutableLiveData<String>()
+        goneSolveErrorBtn()
+        showProgressBar()
+    }
+
+    /**
+     * Callback был создан
+     * */
+    fun onViewCreated(callback: SelectCityCallback) {
+        callbackWR = WeakReference(callback)
+
+        val loadCityName = callbackWR?.get()?.getCityName()
+
+        if (loadCityName == null) {
+            editCityName()
+        } else {
+            cityName = loadCityName
+            iForecastInteractor.loadForecast(cityName, this)
+        }
+    }
+
+    /**
+     * Callback был уничтожен
+     * */
+    fun onDestroyView() {
+        callbackWR = null
+    }
+
+    /**
+     * Устанавливает новое собщение ошибки
+     * @param message - сообщение
+     * */
+    private fun setMessageThrowable(message: String) {
+        mutableThrowableMessage.value = message
+    }
+
+    /**
+     * Изменяет состояние progressbar на Скрытый
+     * */
+    private fun goneProgressbar() {
+        _stateProgressBar.value = View.GONE
+    }
+
+    /**
+     * Показывает кнопку для решения проблемы и указывает текст
+     * @param text - текст, кот. устанавливаеться кнопки
+     * */
+    private fun showSolveErrorBtn(text: String) {
+        _stateSolveErrorBtn.value = View.VISIBLE
+        _textSolveBtn.value = text
     }
 
     /**

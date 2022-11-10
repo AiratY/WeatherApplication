@@ -3,8 +3,8 @@ package ru.yunusov.weatherapplication.presentation.main
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModel
+import ru.yunusov.weatherapplication.data.repository.shared.SavedMainCity
 import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
-import ru.yunusov.weatherapplication.domain.SavedMainCity
 import ru.yunusov.weatherapplication.other.CITY_NAME
 
 class MainViewModel : ViewModel() {

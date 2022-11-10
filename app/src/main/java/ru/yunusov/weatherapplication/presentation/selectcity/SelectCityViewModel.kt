@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.yunusov.weatherapplication.data.repository.gson.GsonService
+import ru.yunusov.weatherapplication.data.repository.gson.ListAllCity
+import ru.yunusov.weatherapplication.data.repository.shared.SavedCities
 import ru.yunusov.weatherapplication.data.repository.shared.SharedServices
-import ru.yunusov.weatherapplication.domain.ListAllCity
-import ru.yunusov.weatherapplication.domain.SavedCities
 import ru.yunusov.weatherapplication.other.CITY_NAME
 
 class SelectCityViewModel : ViewModel(), CityCallback {

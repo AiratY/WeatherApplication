@@ -9,9 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yunusov.weatherapplication.App
 import ru.yunusov.weatherapplication.R
-import ru.yunusov.weatherapplication.data.model.WeatherItemWeek
+import ru.yunusov.weatherapplication.model.WeatherItemWeek
 import ru.yunusov.weatherapplication.other.PicassoHelper
-import ru.yunusov.weatherapplication.other.getShortDate
 
 class WeekWeatherRecyclerViewAdapter :
     RecyclerView.Adapter<WeekWeatherRecyclerViewAdapter.ViewHolder>() {
@@ -23,13 +22,13 @@ class WeekWeatherRecyclerViewAdapter :
         private val tempDayOfWeek: TextView = view.findViewById(R.id.tempOfWeekTextView)
 
         fun bind(weatherItemWeek: WeatherItemWeek) {
-            dayTextView.text = weatherItemWeek.date.getShortDate()
+            dayTextView.text = weatherItemWeek.date
             tempDayOfWeek.text = App.getAppContext()?.getString(
                 R.string.max_and_min_temp,
                 weatherItemWeek.maxTemp,
                 weatherItemWeek.minTemp
             )
-            PicassoHelper.setIconImageView(weatherItemWeek.iconId, iconDayOfWeek)
+            PicassoHelper.setIconImageView(weatherItemWeek.srcIcon, iconDayOfWeek)
         }
     }
 

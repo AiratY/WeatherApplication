@@ -8,15 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.yunusov.weatherapplication.R
-import ru.yunusov.weatherapplication.data.model.Forecast
+import ru.yunusov.weatherapplication.model.WeatherItemDay
 import ru.yunusov.weatherapplication.other.PicassoHelper
-import ru.yunusov.weatherapplication.other.convertToPercent
-import ru.yunusov.weatherapplication.other.getDataFromUnix
-import ru.yunusov.weatherapplication.other.getTime
 
 class TodayWeatherRecyclerViewAdapter :
     RecyclerView.Adapter<TodayWeatherRecyclerViewAdapter.ViewHolder>() {
-    private var dataSet: List<Forecast> = emptyList()
+    private var dataSet: List<WeatherItemDay> = emptyList()
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val timeTextView: TextView = view.findViewById(R.id.timeTextView)
@@ -24,15 +21,11 @@ class TodayWeatherRecyclerViewAdapter :
         private val iconImageView: ImageView = view.findViewById(R.id.iconTodayImageView)
         private val tempItemTextView: TextView = view.findViewById(R.id.tempItemTextView)
 
-        fun bind(forecast: Forecast) {
-            val date = forecast.dt.getDataFromUnix()
-            timeTextView.text = date.getTime()
-            val pop = forecast.pop.convertToPercent()
-            if (pop > 50) {
-                popTextView.text = forecast.getPopString()
-            }
-            tempItemTextView.text = forecast.main.getTempWithDegree()
-            PicassoHelper.setIconImageView(forecast.weather[0].icon, iconImageView)
+        fun bind(weather: WeatherItemDay) {
+            timeTextView.text = weather.time
+            popTextView.text = weather.pop
+            tempItemTextView.text = weather.temp
+            PicassoHelper.setIconImageView(weather.srcIcon, iconImageView)
         }
     }
 
@@ -49,7 +42,7 @@ class TodayWeatherRecyclerViewAdapter :
     override fun getItemCount(): Int = dataSet.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setDataSet(data: List<Forecast>) {
+    fun setDataSet(data: List<WeatherItemDay>) {
         dataSet = data
         notifyDataSetChanged()
     }

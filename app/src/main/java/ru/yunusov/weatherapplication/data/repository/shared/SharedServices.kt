@@ -3,8 +3,6 @@ package ru.yunusov.weatherapplication.data.repository.shared
 import android.content.Context
 import ru.yunusov.weatherapplication.App
 import ru.yunusov.weatherapplication.R
-import ru.yunusov.weatherapplication.domain.SavedCities
-import ru.yunusov.weatherapplication.domain.SavedMainCity
 
 class SharedServices : SavedCities, SavedMainCity {
 

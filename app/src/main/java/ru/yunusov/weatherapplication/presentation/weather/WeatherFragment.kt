@@ -15,9 +15,15 @@ import ru.yunusov.weatherapplication.databinding.FragmentWeatherBinding
 import ru.yunusov.weatherapplication.other.CITY_NAME
 import ru.yunusov.weatherapplication.other.creatorViewModel
 
-class WeatherFragment : Fragment(), SelectCityCallback {
+class WeatherFragment : Fragment() {
 
-    private val viewModel: WeatherViewModel by creatorViewModel { WeatherViewModel() }
+    private val viewModel: WeatherViewModel by creatorViewModel {
+        WeatherViewModel(
+            requireArguments().getString(
+                CITY_NAME, ""
+            )
+        )
+    }
     private var _binding: FragmentWeatherBinding? = null
     private val binding get() = _binding
 
@@ -35,32 +41,55 @@ class WeatherFragment : Fragment(), SelectCityCallback {
 
         binding?.viewModel = viewModel
         binding?.lifecycleOwner = this
-        viewModel.onViewCreated(this)
 
+        val weekWeatherRecyclerViewAdapter = WeekWeatherRecyclerViewAdapter()
         val weekRecyclerView = binding?.weekWeatherRecyclerView
         val dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         val drawableDivider =
             ResourcesCompat.getDrawable(resources, R.drawable.divider_drawable, null)
         drawableDivider?.let { dividerItemDecoration.setDrawable(it) }
         weekRecyclerView?.addItemDecoration(dividerItemDecoration)
+        weekRecyclerView?.adapter = weekWeatherRecyclerViewAdapter
 
-        viewModel.throwableMessage.observe(viewLifecycleOwner) { errorMessage ->
-            showMessage(errorMessage)
+        val dayRecyclerView = binding?.todayWeatherRecyclerView
+        val todayWeatherRecyclerViewAdapter = TodayWeatherRecyclerViewAdapter()
+        dayRecyclerView?.adapter = todayWeatherRecyclerViewAdapter
+
+        viewModel.data?.let { livedata ->
+            livedata.observe(viewLifecycleOwner) { resources ->
+                binding?.weather = livedata.value?.data
+                binding?.weatherResource = livedata.value
+
+                resources.data?.listWeatherWeek?.let { weekWeatherRecyclerViewAdapter.setDataSet(it) }
+                resources.data?.listWeatherDay?.let { todayWeatherRecyclerViewAdapter.setDataSet(it) }
+
+                resources.message?.let { msg -> showMessage(msg) }
+            }
+        }
+
+        viewModel.isSelectCity.observe(viewLifecycleOwner) {
+            if (it.getContentIfNotHandle() == true) {
+                selectNewCity()
+            }
+        }
+
+        viewModel.isSetMainCity.observe(viewLifecycleOwner) {
+            if (it) {
+                selectNewCity()
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        viewModel.onDestroyView()
     }
 
-    override fun selectNewCity() {
+    /**
+     * Запрашивает выбор нового города
+     * */
+    private fun selectNewCity() {
         findNavController().navigate(R.id.action_weatherFragment_to_selectCityFragment)
-    }
-
-    override fun getCityName(): String? {
-        return requireArguments().getString(CITY_NAME, null)
     }
 
     /**
@@ -68,6 +97,6 @@ class WeatherFragment : Fragment(), SelectCityCallback {
      * @param message - сообщение
      * */
     private fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

@@ -7,16 +7,20 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.ChronoField
 
 const val NANO_OF_SECOND = 0
 const val KM = 1000
 const val PERCENTS = 100
+private const val SHORT_DATA_PATTERN = "E, d, LLL"
+private const val TIME_PATTERN = "HH:mm"
 
 /**
  * Возращает время от текущей даты в виде строки
  * */
 fun LocalDateTime.getTime(): String {
-    return this.format(DateTimeFormatter.ofPattern("HH:mm"))
+    return this.format(DateTimeFormatter.ofPattern(TIME_PATTERN))
 }
 
 /**
@@ -31,7 +35,20 @@ fun Long.getDataFromUnix(): LocalDateTime {
  * Возращает строку содержащию дату в коротком виде
  * */
 fun LocalDate.getShortDate(): String {
-    return this.format(DateTimeFormatter.ofPattern("E, d, LLL"))
+    return this.format(DateTimeFormatter.ofPattern(SHORT_DATA_PATTERN))
+}
+
+/**
+ * Возращает строку содержащию дату в коротком виде
+ * */
+fun String.fromShortDate(): LocalDate {
+    val nowLocalDate = LocalDate.now()
+
+    val format = DateTimeFormatterBuilder()
+        .appendPattern(SHORT_DATA_PATTERN)
+        .parseDefaulting(ChronoField.YEAR, nowLocalDate.year.toLong())
+        .toFormatter()
+    return LocalDate.parse(this, format)
 }
 
 /**

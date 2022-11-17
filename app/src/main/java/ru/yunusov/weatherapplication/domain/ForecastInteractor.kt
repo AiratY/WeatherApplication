@@ -1,5 +1,6 @@
-package ru.yunusov.weatherapplication.data.repository
+package ru.yunusov.weatherapplication.domain
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -16,29 +17,33 @@ import ru.yunusov.weatherapplication.other.NOT_FOUND
 import ru.yunusov.weatherapplication.other.NO_CONNECTION
 import java.net.UnknownHostException
 
-class ForecastRepository(
+class ForecastInteractor(
     private val weatherApi: WeatherApi,
     private val forecastDao: ForecastDao,
     private val city: String
-) {
-    val result = MediatorLiveData<Resource<WeatherForecast>>()
+) : IForecastInteractor {
+    val forecast = MediatorLiveData<Resource<WeatherForecast>>()
     private val data = forecastDao.getForecast(city)
 
     init {
         startLoading()
-        result.addSource(data) { weatherForecast ->
-            result.removeSource(data)
+        forecast.addSource(data) { weatherForecast ->
+            forecast.removeSource(data)
             if (weatherForecast != null) {
-                result.value = Resource.success(weatherForecast)
+                forecast.value = Resource.success(weatherForecast)
             }
             refresh()
         }
     }
 
+    override fun getForecast(): LiveData<Resource<WeatherForecast>> {
+        return forecast
+    }
+
     /**
      * Обновляет данные
      * */
-    fun refresh() {
+    override fun refresh() {
         val mapper = ForecastListToWeatherForecastMapper()
         startLoading()
         weatherApi.getWeather(city)
@@ -69,9 +74,9 @@ class ForecastRepository(
             }
         }
         val error = MutableLiveData(message)
-        result.addSource(error) { msg ->
-            result.removeSource(error)
-            result.value = Resource.error(msg, data.value)
+        forecast.addSource(error) { msg ->
+            forecast.removeSource(error)
+            forecast.value = Resource.error(msg, data.value)
         }
     }
 
@@ -84,25 +89,26 @@ class ForecastRepository(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                result.addSource(data) {
-                    result.value = Resource.success(it)
+                forecast.addSource(data) {
+                    forecast.value = Resource.success(it)
                 }
             }
     }
+
     /**
      * Обозначает начало загрузки данных
      * */
     private fun startLoading() {
-        result.value = Resource.loading(data.value)
+        forecast.value = Resource.loading(data.value)
     }
 
     companion object {
         /**
-         * Возвращает экземпляр ForecastRepository
+         * Возвращает экземпляр ForecastInteractor
          * @return ForecastRepository
          * */
-        fun newInstance(city: String): ForecastRepository {
-            return ForecastRepository(RetrofitService.weatherApi, RoomService.getDB(), city)
+        fun newInstance(city: String): ForecastInteractor {
+            return ForecastInteractor(RetrofitService.weatherApi, RoomService.getDB(), city)
         }
     }
 }

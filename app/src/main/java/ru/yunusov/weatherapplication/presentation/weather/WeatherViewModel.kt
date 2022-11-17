@@ -5,7 +5,8 @@ import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.yunusov.weatherapplication.data.repository.ForecastRepository
+import ru.yunusov.weatherapplication.domain.ForecastInteractor
+import ru.yunusov.weatherapplication.domain.IForecastInteractor
 import ru.yunusov.weatherapplication.model.Resource
 import ru.yunusov.weatherapplication.model.WeatherForecast
 import ru.yunusov.weatherapplication.other.CHANGE_CITY
@@ -20,14 +21,18 @@ class WeatherViewModel(val cityName: String) : ViewModel() {
     private val _isSelectCity = MutableLiveData<Event<Boolean>>()
     val isSelectCity: LiveData<Event<Boolean>> get() = _isSelectCity
 
-    private val repository by lazy { ForecastRepository.newInstance(cityName) }
+    private val iForecastInteractor: IForecastInteractor by lazy {
+        ForecastInteractor.newInstance(
+            cityName
+        )
+    }
     var data: LiveData<Resource<WeatherForecast>>? = null
 
     init {
         if (cityName == "") {
             setMainCity()
         } else {
-            data = repository.result
+            data = iForecastInteractor.getForecast()
         }
     }
 
@@ -45,7 +50,7 @@ class WeatherViewModel(val cityName: String) : ViewModel() {
         (view as? Button)?.let {
             when (view.text) {
                 CHANGE_CITY -> editCityName()
-                UPDATE -> repository.refresh() // iForecastInteractor.loadForecast(cityName, this)
+                UPDATE -> iForecastInteractor.refresh()
             }
         }
     }
